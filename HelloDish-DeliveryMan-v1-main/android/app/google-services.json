@@ -1,0 +1,151 @@
+{
+  "project_info": {
+    "project_number": "245282429480",
+    "firebase_url": "https://hello-dish-app-default-rtdb.firebaseio.com",
+    "project_id": "hello-dish-app",
+    "storage_bucket": "hello-dish-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245282429480:android:7f105e674697ae0e12731d",
+        "android_client_info": {
+          "package_name": "com.app.hello_dish_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245282429480-cf13k4ijslko6feqsh7mk4uec9b2tnpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.hello_dish_driver",
+            "certificate_hash": "79da98a355d14e0a21ff6f31ac0c31b3a2f70339"
+          }
+        },
+        {
+          "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGtdtXsmtzaeMeZAKuAY1dfTbZ5kVLp3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "245282429480-132dhmhi1jj35f14avu27slihfq2et52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hellodish.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245282429480:android:9d58d9714b0d9f7312731d",
+        "android_client_info": {
+          "package_name": "com.app.hello_restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245282429480-l97f0bk02bujheokdltc3eard17kc4dh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.hello_restaurant",
+            "certificate_hash": "79da98a355d14e0a21ff6f31ac0c31b3a2f70339"
+          }
+        },
+        {
+          "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGtdtXsmtzaeMeZAKuAY1dfTbZ5kVLp3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "245282429480-132dhmhi1jj35f14avu27slihfq2et52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hellodish.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245282429480:android:ee0363e68e0c063912731d",
+        "android_client_info": {
+          "package_name": "com.app.hellodish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245282429480-n6usb9d9s4p2h2iihnpq931smkidk97b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.hellodish",
+            "certificate_hash": "4e04278f0a58844272bba0e9824908bdfd71a11e"
+          }
+        },
+        {
+          "client_id": "245282429480-pujrqep3qiumbd08v1rrmn6133lf09po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.hellodish",
+            "certificate_hash": "79da98a355d14e0a21ff6f31ac0c31b3a2f70339"
+          }
+        },
+        {
+          "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGtdtXsmtzaeMeZAKuAY1dfTbZ5kVLp3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245282429480-66jnqoa7gs50jpem348ppem4le11vpfq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "245282429480-132dhmhi1jj35f14avu27slihfq2et52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hellodish.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
