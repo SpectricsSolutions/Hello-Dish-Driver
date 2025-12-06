@@ -62,6 +62,130 @@ class ProfileService implements ProfileServiceInterface {
 
   @override
   void checkPermission(Function callback) async {
+    // ALWAYS show disclosure first before any permission check
+    _showLocationDisclosure(callback);
+  }
+// New method: Show disclosure dialog
+  void _showLocationDisclosure(Function callback) {
+    showCustomBottomSheet(
+      child: CustomConfirmationBottomSheet(
+        title: 'Location Access Needed',
+        description: 'Hellodish Driver needs access to your location to:\n\n'
+            '• Show your current position to customers\n'
+            '• Calculate accurate delivery routes\n'
+            '• Enable real-time order tracking\n'
+            '• Connect you with nearby orders',
+        image: Images.locationAccessIcon,
+        buttonWidget: Padding(
+          padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+          child: CustomButtonWidget(
+            onPressed: () {
+              Get.back();
+              // After disclosure, NOW request permission
+              _handleLocationPermission(callback);
+            },
+            buttonText: 'Continue',
+          ),
+        ),
+      ),
+    );
+  }
+  // New method: Handle permission request (called after disclosure)
+  Future<void> _handleLocationPermission(Function callback) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    // Check if already granted
+    if (permission == LocationPermission.always ||
+        (GetPlatform.isIOS && permission == LocationPermission.whileInUse)) {
+      callback();
+      return;
+    }
+
+    // For Android with "while in use", need to upgrade to "always"
+    if (GetPlatform.isAndroid && permission == LocationPermission.whileInUse) {
+      _showNeedAlwaysLocationDialog(callback);
+      return;
+    }
+
+    // Request permission
+    await _requestLocationPermission(callback);
+  }
+  void _showNeedAlwaysLocationDialog(Function callback) {
+    showCustomBottomSheet(
+      child: CustomConfirmationBottomSheet(
+        title: 'Location Access Needed',
+        description: 'Please enable "Allow all the time" location access to continue',
+        image: Images.locationAccessIcon,
+        buttonWidget: Padding(
+          padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+          child: CustomButtonWidget(
+            onPressed: () async {
+              Get.back();
+              await Geolocator.openAppSettings();
+            },
+            buttonText: 'Open Settings',
+          ),
+        ),
+      ),
+    );
+  }
+  Future<void> _requestLocationPermission(Function callback) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    while(Get.isBottomSheetOpen == true) {
+      Get.back();
+    }
+
+    if(permission == LocationPermission.denied) {
+      showCustomBottomSheet(
+        child: CustomConfirmationBottomSheet(
+          title: 'Location Permission Required',
+          description: 'Please allow location access to continue',
+          image: Images.locationAccessIcon,
+          buttonWidget: Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+            child: CustomButtonWidget(
+              onPressed: () async {
+                Get.back();
+                await _requestLocationPermission(callback);
+              },
+              buttonText: 'Try Again',
+            ),
+          ),
+        ),
+      );
+    } else if(permission == LocationPermission.deniedForever) {
+      showCustomBottomSheet(
+        child: CustomConfirmationBottomSheet(
+          title: 'Location Access Needed',
+          description: 'Please enable location access from app settings',
+          image: Images.locationAccessIcon,
+          buttonWidget: Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+            child: CustomButtonWidget(
+              onPressed: () async {
+                Get.back();
+                await Geolocator.openAppSettings();
+              },
+              buttonText: 'Open Settings',
+            ),
+          ),
+        ),
+      );
+    } else if(GetPlatform.isAndroid && permission == LocationPermission.whileInUse) {
+      _showNeedAlwaysLocationDialog(callback);
+    } else {
+      callback();
+    }
+  }
+
+/*
+  @override
+  void checkPermission(Function callback) async {
     LocationPermission permission = await Geolocator.requestPermission();
     permission = await Geolocator.checkPermission();
 
@@ -115,5 +239,5 @@ class ProfileService implements ProfileServiceInterface {
       callback();
     }
   }
-
+*/
 }

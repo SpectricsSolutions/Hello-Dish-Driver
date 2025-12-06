@@ -527,7 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ) : const SizedBox();
   }
-
+/*
   void _checkPermission(Function callback) async {
     LocationPermission permission = await Geolocator.requestPermission();
     permission = await Geolocator.checkPermission();
@@ -578,6 +578,120 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }else {
+      callback();
+    }
+  }
+*/
+  void _checkPermission(Function callback) async {
+    // ALWAYS show disclosure first, regardless of permission status
+    _showLocationDisclosure(callback);
+  }
+  // New method: Show disclosure dialog explaining why we need location
+  void _showLocationDisclosure(Function callback) {
+    showCustomBottomSheet(
+      child: CustomConfirmationBottomSheet(
+        title: 'Location Access Needed',
+        description: 'Hellodish Driver needs access to your location to:\n\n'
+            '• Show your current position to customers\n'
+            '• Calculate accurate delivery routes\n'
+            '• Enable real-time order tracking\n'
+            '• Connect you with nearby orders',
+        image: Images.locationAccessIcon,
+        buttonWidget: Padding(
+          padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+          child: Row(children: [
+            Expanded(
+              child: CustomButtonWidget(
+                onPressed: () async {
+                  Get.back();
+                  // After user sees disclosure and clicks Continue, NOW request permission
+                  await _requestLocationPermission(callback);
+                },
+                buttonText: 'Continue',
+              ),
+            ),
+            const SizedBox(width: Dimensions.paddingSizeSmall),
+            Expanded(
+              child: CustomButtonWidget(
+                onPressed: () => Get.back(),
+                buttonText: 'Not Now',
+                backgroundColor: Theme.of(context).disabledColor.withValues(alpha: 0.1),
+                fontColor: Theme.of(context).disabledColor,
+                isBorder: true,
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+// New method: Handle the actual permission request (after disclosure)
+  Future<void> _requestLocationPermission(Function callback) async {
+    // First check current permission status
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    // If not granted, request it
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    // Close any open bottom sheets
+    while(Get.isBottomSheetOpen == true) {
+      Get.back();
+    }
+
+    // Handle the permission result
+    if(permission == LocationPermission.denied) {
+      showCustomBottomSheet(
+        child: CustomConfirmationBottomSheet(
+          title: 'Location Permission Required',
+          description: 'Please allow location access to go online and receive orders',
+          image: Images.locationAccessIcon,
+          buttonWidget: Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+            child: CustomButtonWidget(
+              onPressed: () async {
+                Get.back();
+                final perm = await Geolocator.requestPermission();
+                if(perm == LocationPermission.deniedForever) {
+                  await Geolocator.openAppSettings();
+                }
+                if(GetPlatform.isAndroid) {
+                  await _requestLocationPermission(callback);
+                }
+              },
+              buttonText: 'Allow Location Permission',
+            ),
+          ),
+        ),
+      );
+    } else if(permission == LocationPermission.deniedForever || (GetPlatform.isIOS ? false : permission == LocationPermission.whileInUse)) {
+      showCustomBottomSheet(
+        child: CustomConfirmationBottomSheet(
+          title: 'Location Access Needed',
+          description: permission == LocationPermission.whileInUse
+              ? 'Please enable "Always Allow" location access in settings'
+              : 'Please enable location access from app settings to continue',
+          image: Images.locationAccessIcon,
+          buttonWidget: Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
+            child: CustomButtonWidget(
+              onPressed: () async {
+                Get.back();
+                await Geolocator.openAppSettings();
+                Future.delayed(const Duration(seconds: 3), () {
+                  if(GetPlatform.isAndroid) {
+                    _requestLocationPermission(callback);
+                  }
+                });
+              },
+              buttonText: 'Open Settings',
+            ),
+          ),
+        ),
+      );
+    } else {
+      // Permission granted, execute the callback
       callback();
     }
   }
