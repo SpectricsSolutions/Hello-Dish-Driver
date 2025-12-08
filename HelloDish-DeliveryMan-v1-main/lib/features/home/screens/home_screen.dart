@@ -595,7 +595,9 @@ class _HomeScreenState extends State<HomeScreen> {
             '• Show your current position to customers\n'
             '• Calculate accurate delivery routes\n'
             '• Enable real-time order tracking\n'
-            '• Connect you with nearby orders',
+            '• Connect you with nearby orders\n\n'
+            'Location data is collected even when the app is closed or not in use to provide continuous order tracking and route updates during active deliveries.\n\n'
+            'Your location is shared with customers and restaurants during active deliveries.',
         image: Images.locationAccessIcon,
         buttonWidget: Padding(
           padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
@@ -671,7 +673,13 @@ class _HomeScreenState extends State<HomeScreen> {
           title: 'Location Access Needed',
           description: permission == LocationPermission.whileInUse
               ? 'Please enable "Always Allow" location access in settings'
-              : 'Please enable location access from app settings to continue',
+              : 'Please enable location access from app settings to continue. Hellodish Driver needs access to your location to:\n\n'
+              '• Show your current position to customers\n'
+              '• Calculate accurate delivery routes\n'
+              '• Enable real-time order tracking\n'
+              '• Connect you with nearby orders\n\n'
+              'Location data is collected even when the app is closed or not in use to provide continuous order tracking and route updates during active deliveries.\n\n'
+              'Your location is shared with customers and restaurants during active deliveries.',
           image: Images.locationAccessIcon,
           buttonWidget: Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
