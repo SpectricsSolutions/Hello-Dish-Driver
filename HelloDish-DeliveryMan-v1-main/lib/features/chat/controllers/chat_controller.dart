@@ -91,7 +91,7 @@ class ChatController extends GetxController implements GetxService {
     if (messageModel != null) {
       if (offset == 1) {
         if(Get.find<ProfileController>().profileModel == null) {
-          await Get.find<ProfileController>().getProfile();
+          await Get.find<ProfileController>().getProfile(false);
         }
         _messageModel = messageModel;
         if(_messageModel!.conversation == null && user != null) {

@@ -160,7 +160,7 @@ class _SignInScreenState extends State<SignInScreen> {
           } else {
             authController.clearUserNumberAndPassword();
           }
-          await Get.find<ProfileController>().getProfile();
+          await Get.find<ProfileController>().getProfile(false);
           Get.offAllNamed(RouteHelper.getInitialRoute());
         }else {
           showCustomSnackBar(status.message);

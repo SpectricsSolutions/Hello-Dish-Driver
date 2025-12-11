@@ -34,7 +34,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     super.initState();
 
     if(Get.find<ProfileController>().profileModel == null) {
-      Get.find<ProfileController>().getProfile();
+      Get.find<ProfileController>().getProfile(false);
     }
     Get.find<ProfileController>().initData();
   }
@@ -170,7 +170,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       ProfileModel updatedUser = ProfileModel(fName: firstName, lName: lastName, email: email, phone: phoneNumber);
       profileController.updateUserInfo(updatedUser, Get.find<AuthController>().getUserToken()).then((isSuccess) async {
         if(isSuccess){
-          await profileController.getProfile();
+          await profileController.getProfile(false);
         }
       });
     }

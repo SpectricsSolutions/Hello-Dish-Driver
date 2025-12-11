@@ -223,7 +223,7 @@ class OrderController extends GetxController implements GetxService {
         Get.offAllNamed(RouteHelper.getInitialRoute(fromOrderDetails: true));
       }
       if(!stopOtherDataCall){
-        Get.find<ProfileController>().getProfile();
+        Get.find<ProfileController>().getProfile(false);
         getCurrentOrders();
         currentOrder.orderStatus = status;
       }

@@ -30,7 +30,7 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     if (Get.find<AuthController>().isLoggedIn()) {
-      Get.find<ProfileController>().getProfile();
+      Get.find<ProfileController>().getProfile(false);
     }
 
     bool firstTime = true;
@@ -117,7 +117,7 @@ class SplashScreenState extends State<SplashScreen> {
   Future<void> _handleDefaultRouting() async {
     if (Get.find<AuthController>().isLoggedIn()) {
       Get.find<AuthController>().updateToken();
-      await Get.find<ProfileController>().getProfile();
+      await Get.find<ProfileController>().getProfile(false);
       Get.offNamed(RouteHelper.getInitialRoute());
     } else {
       Get.offNamed(RouteHelper.getSignInRoute());

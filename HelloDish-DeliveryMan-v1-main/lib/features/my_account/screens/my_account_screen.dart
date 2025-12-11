@@ -45,7 +45,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void _loadInitialData() {
-    _profileController.getProfile();
+    _profileController.getProfile(false);
     _accountController.getWithdrawRequestList();
     _accountController.getWalletPaymentList();
     _accountController.getWalletProvidedEarningList();
@@ -55,7 +55,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   Future<void> _refreshData() async {
     await Future.wait([
-      _profileController.getProfile(),
+      _profileController.getProfile(false),
       _accountController.getWithdrawRequestList(),
       _accountController.getWalletPaymentList(),
       _accountController.getWalletProvidedEarningList(),

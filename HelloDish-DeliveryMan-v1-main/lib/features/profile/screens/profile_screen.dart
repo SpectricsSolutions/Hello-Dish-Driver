@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _listener = AppLifecycleListener(
       onStateChange: _onStateChanged,
     );
-    Get.find<ProfileController>().getProfile();
+    Get.find<ProfileController>().getProfile(false);
   }
 
   void _onStateChanged(AppLifecycleState state) {

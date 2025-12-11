@@ -23,7 +23,7 @@ class OrderRequestScreenState extends State<OrderRequestScreen> {
     super.initState();
 
     if(Get.find<ProfileController>().profileModel == null) {
-      Get.find<ProfileController>().getProfile();
+      Get.find<ProfileController>().getProfile(false);
     }
 
     Get.find<OrderController>().getLatestOrders();

@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData() async {
     Get.find<OrderController>().getIgnoreList();
     Get.find<OrderController>().removeFromIgnoreList();
-    await Get.find<ProfileController>().getProfile();
+    await Get.find<ProfileController>().getProfile(true);
     await Get.find<OrderController>().getCurrentOrders();
     await Get.find<NotificationController>().getNotificationList();
   }

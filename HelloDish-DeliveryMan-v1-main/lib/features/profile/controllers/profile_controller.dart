@@ -32,15 +32,19 @@ class ProfileController extends GetxController implements GetxService {
   bool _backgroundNotification = true;
   bool get backgroundNotification => _backgroundNotification;
 
-  Future<void> getProfile() async {
+  Future<void> getProfile(bool isLocation) async {
     ProfileModel? profileModel = await profileServiceInterface.getProfileInfo();
     if (profileModel != null) {
       _profileModel = profileModel;
-      if (_profileModel!.active == 1) {
-        profileServiceInterface.checkPermission(() => startLocationRecord());
-      } else {
-        stopLocationRecord();
-      }
+      if(isLocation)
+        {
+          if (_profileModel!.active == 1) {
+            profileServiceInterface.checkPermission(() => startLocationRecord());
+          } else {
+            stopLocationRecord();
+          }
+        }
+
     }
     update();
   }

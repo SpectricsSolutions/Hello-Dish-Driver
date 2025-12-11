@@ -206,7 +206,7 @@ class DisbursementController extends GetxController implements GetxService {
     bool isSuccess = await disbursementServiceInterface.createWithdrawRequest(data);
     if(isSuccess) {
       Get.back();
-      Get.find<ProfileController>().getProfile();
+      Get.find<ProfileController>().getProfile(false);
       getDisbursementMethodList();
       showCustomSnackBar('add_successfully'.tr, isError: false);
     }

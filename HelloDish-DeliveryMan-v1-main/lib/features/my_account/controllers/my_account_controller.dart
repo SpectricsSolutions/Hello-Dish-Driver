@@ -112,7 +112,7 @@ class MyAccountController extends GetxController implements GetxService {
     update();
     ResponseModel responseModel = await myAccountServiceInterface.makeWalletAdjustment();
     if(responseModel.isSuccess) {
-      await Get.find<ProfileController>().getProfile();
+      await Get.find<ProfileController>().getProfile(false);
       await getWalletProvidedEarningList();
       Get.back();
       showCustomSnackBar(responseModel.message, isError: false);
