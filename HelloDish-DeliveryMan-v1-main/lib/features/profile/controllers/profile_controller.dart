@@ -39,7 +39,7 @@ class ProfileController extends GetxController implements GetxService {
       if(isLocation)
         {
           if (_profileModel!.active == 1) {
-            profileServiceInterface.checkPermission(() => startLocationRecord());
+            startLocationRecord();
           } else {
             stopLocationRecord();
           }

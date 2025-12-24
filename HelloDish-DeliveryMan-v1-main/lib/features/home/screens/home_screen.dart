@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final AppLifecycleListener _listener;
   bool _isNotificationPermissionGranted = true;
   bool _isBatteryOptimizationGranted = true;
-
+  bool _hasSeenLocationDisclosure = false;
   @override
   void initState() {
     super.initState();
@@ -247,9 +247,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }else {
                       LocationPermission permission = await Geolocator.checkPermission();
-                      if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever || (GetPlatform.isIOS ? false : permission == LocationPermission.whileInUse)) {
+
+                      if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
                         _checkPermission(() => profileController.updateActiveStatus());
-                      }else {
+                      } else {
                         profileController.updateActiveStatus();
                       }
                     }
@@ -527,64 +528,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ) : const SizedBox();
   }
-/*
+
   void _checkPermission(Function callback) async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    permission = await Geolocator.checkPermission();
 
-    while(Get.isBottomSheetOpen == true) {
-      Get.back();
-    }
-
-    if(permission == LocationPermission.denied) {
-      showCustomBottomSheet(
-        child: CustomConfirmationBottomSheet(
-          title: 'location_access_needed'.tr,
-          description: 'you_denied'.tr,
-          image: Images.locationAccessIcon,
-          buttonWidget: Padding(
-            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
-            child: CustomButtonWidget(
-              onPressed: () async {
-                Get.back();
-                final perm = await Geolocator.requestPermission();
-                if(perm == LocationPermission.deniedForever) await Geolocator.openAppSettings();
-                if(GetPlatform.isAndroid) _checkPermission(callback);
-              },
-              buttonText: 'allow_location_permission'.tr,
-            ),
-          ),
-        ),
-      );
-    }else if(permission == LocationPermission.deniedForever || (GetPlatform.isIOS ? false : permission == LocationPermission.whileInUse)) {
-      showCustomBottomSheet(
-        child: CustomConfirmationBottomSheet(
-          title: 'location_access_needed'.tr,
-          description: permission == LocationPermission.whileInUse ? 'you_denied'.tr : 'you_denied_forever'.tr,
-          image: Images.locationAccessIcon,
-          buttonWidget: Padding(
-            padding: const EdgeInsets.only(bottom: 20, top: 10, left: 30, right: 30),
-            child: CustomButtonWidget(
-              onPressed: () async {
-                Get.back();
-                await Geolocator.openAppSettings();
-                Future.delayed(const Duration(seconds: 3), () {
-                  if(GetPlatform.isAndroid) _checkPermission(callback);
-                });
-              },
-              buttonText: 'allow_location_permission'.tr,
-            ),
-          ),
-        ),
-      );
-    }else {
+    LocationPermission permission = await Geolocator.checkPermission();
+    print('DEBUG: Current permission status: $permission');
+    // If permission is already granted (always or whileInUse), execute callback immediately
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
       callback();
-    }
-  }
-*/
-  void _checkPermission(Function callback) async {
+      return;
+    }else
+      {
+        _showLocationDisclosure(callback);
+      }
     // ALWAYS show disclosure first, regardless of permission status
-    _showLocationDisclosure(callback);
+
   }
   // New method: Show disclosure dialog explaining why we need location
   void _showLocationDisclosure(Function callback) {
@@ -667,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       );
-    } else if(permission == LocationPermission.deniedForever || (GetPlatform.isIOS ? false : permission == LocationPermission.whileInUse)) {
+    } else if(permission == LocationPermission.deniedForever) {
       showCustomBottomSheet(
         child: CustomConfirmationBottomSheet(
           title: 'Location Access Needed',
