@@ -45,8 +45,8 @@ Future<void> main() async {
       if(remoteMessage != null){
         body = NotificationHelper.convertNotification(remoteMessage.data);
       }
-      await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
-      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+      //await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
+    //  FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
   }catch(_) {}
 

@@ -165,7 +165,7 @@ class NotificationHelper {
   }
 
   static Future<void> showNotification(RemoteMessage message, FlutterLocalNotificationsPlugin fln) async {
-    if(!GetPlatform.isIOS) {
+   /* if(!GetPlatform.isIOS) {
       String? title;
       String? body;
       String? image;
@@ -185,7 +185,7 @@ class NotificationHelper {
       }else {
         await showBigTextNotification(title, body!, notificationBody, fln);
       }
-    }
+    }*/
   }
 
   static Future<void> showTextNotification(String title, String body, NotificationBodyModel notificationBody, FlutterLocalNotificationsPlugin fln) async {
